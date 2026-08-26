@@ -1,0 +1,53 @@
+# Imposition PDF pour cahiers cousus — v0.1 (pli simple)
+
+## Ce qui marche déjà
+
+- Découpe un PDF en cahiers de N pages, complète avec des pages blanches si besoin
+- Impose en pli simple (A4→A5 imbriqué), avec plusieurs feuilles nichées par cahier
+- Sort un PDF prêt à imprimer en recto-verso (une page = une face de feuille)
+- **Vérifié** : testé sur un PDF de 16 pages, cahier de 4 feuilles A4, résultat conforme
+  à la formule classique de saddle-stitch (feuille 1 : 16-1 / 2-15, feuille 2 : 14-3 / 4-13, etc.)
+
+## Installation
+
+```bash
+pip install pymupdf
+```
+
+## Usage
+
+```bash
+python3 impose.py mon_livre.pdf sortie.pdf \
+    --sheet-format A4 \
+    --pages-per-sheet 4 \
+    --sheets-per-cahier 4
+```
+
+- `--pages-per-sheet 4` = pli simple (seul schéma dispo pour l'instant)
+- `--sheets-per-cahier` = nombre de feuilles A4 imbriquées avant couture
+  (4 feuilles imbriquées pliées une fois = un cahier de 16 pages)
+
+## Ce qu'il reste à faire
+
+1. **Plis multiples (in-4, in-8, in-16, in-32)** — pas implémentés exprès :
+   la formule change selon l'ordre/le sens des plis et il existe plusieurs
+   variantes standard (angle droit, work-and-turn...). Pour ne pas te
+   livrer un cahier illisible, la méthode prévue : on vérifie chaque
+   schéma en pliant une vraie feuille numérotée à la main, puis on
+   l'ajoute dans `schemes.py` (même principe que `fold_1_scheme`, un
+   schéma = une table de positions + rotations). On peut faire in-4
+   ensemble à la prochaine étape.
+2. **Marges/fond perdu/traits de coupe** — pas encore gérés, le PDF source
+   est pour l'instant mis à l'échelle pour remplir tout le panneau.
+3. **Interface graphique** — pour l'instant c'est en ligne de commande.
+   Prochaine étape : petite UI Tkinter (choix du PDF, du format, du
+   nombre de cahiers, aperçu, export).
+4. **Numérotation/repères de cahier** — utile en reliure pour ne pas
+   mélanger les cahiers à la couture ; pas encore ajouté.
+
+## Structure du projet
+
+- `schemes.py` — définit les schémas d'imposition (un schéma = table de
+  positions/rotations). Un seul schéma pour l'instant (`fold_1`),
+  pensé pour qu'on en ajoute d'autres sans toucher au moteur.
+- `impose.py` — moteur : découpage en cahiers + assemblage du PDF de sortie.
