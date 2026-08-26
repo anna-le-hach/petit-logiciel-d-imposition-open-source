@@ -31,6 +31,8 @@ dans le dossier du projet, puis :
 
 ```bash
 pip install pymupdf tkinterdnd2 pyinstaller
+ou py -m pip install pymupdf tkinterdnd2 pyinstaller
+
 ```
 
 (sur Mac, utilise parfois `pip3` au lieu de `pip`)
@@ -41,6 +43,7 @@ Toujours dans le dossier du projet :
 
 ```bash
 pyinstaller --onefile --windowed --name ImpositionCahiers gui.py
+ou python.exe -m pip install --upgrade pip 
 ```
 
 Ça va créer un dossier `dist/` avec dedans :
