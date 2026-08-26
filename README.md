@@ -11,52 +11,6 @@ Ce qui marche déjà
 - Testé : rendu de l'UI vérifié par capture d'écran, génération testée sur
   un PDF de 16 pages (résultat conforme à la formule saddle-stitch classique)
 
-Je tourne sur un serveur Linux, je ne peux pas fabriquer un exécutable
-Windows (.exe) ni Mac (.app) depuis ici . Il faut lancer une seule commande sur Windows
-ou Mac pour transformer le script en vrai logiciel double-cliquable.
-Une fois fait, tu n'as plus jamais besoin de retoucher à Python : tu
-gardes juste le fichier généré.
-
-installer Python 
-
-- Windows : télécharge sur https://www.python.org/downloads/ et coche
-  bien "Add Python to PATH" à l'installation.
-- Mac : Python est souvent déjà présent (`python3` dans le Terminal),
-  sinon même lien que ci-dessus.
-
- installer les dépendances
-
-Ouvre un terminal (Invite de commandes sur Windows, Terminal sur Mac)
-dans le dossier du projet, puis :
-
-```bash
-pip install pymupdf tkinterdnd2 pyinstaller
-ou py -m pip install pymupdf tkinterdnd2 pyinstaller
-
-```
-
-(sur Mac, utilise parfois `pip3` au lieu de `pip`)
-
-fabriquer l'exécutable
-
-Toujours dans le dossier du projet :
-
-```bash
-pyinstaller --onefile --windowed --name ImpositionCahiers gui.py
-ou python.exe -m pip install --upgrade pip 
-```
-
-Ça va créer un dossier `dist/` avec dedans :
-- Windows : `ImpositionCahiers.exe`
-- Mac : `ImpositionCahiers` (app empaquetée — si macOS bloque au lancement,
-  clic droit → "Ouvrir" la première fois, le temps de passer Gatekeeper)
-
-**C'est ce fichier dans `dist/` qu'il faut désormais garder et partager**
-— plus besoin de Python ni de terminal ensuite, double-clic et c'est parti.
-
-Il faut refaire cette étape séparément sur Windows ET sur Mac (un exécutable
-Windows ne tourne pas sur Mac et inversement) — mais une fois fait sur
-chaque machine, c'est fait pour de bon.
 
 Usage (dans l'appli)
 
