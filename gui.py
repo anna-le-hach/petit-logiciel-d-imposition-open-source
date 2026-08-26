@@ -1,5 +1,5 @@
 """
-gui.py — Interface graphique du logiciel d'imposition.
+gui.py 
 
 Lancer avec :
     python3 gui.py
