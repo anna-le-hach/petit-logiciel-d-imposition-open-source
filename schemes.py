@@ -13,7 +13,7 @@ Chaque schéma est une liste de "slots". Un slot dit :
 IMPORTANT — pourquoi seul le schéma "fold_1" (pli simple, in-2) est fourni
 pour l'instant :
 
-Le schéma à un seul pli (A4 -> A5 imbriqué, comme dans ton script InDesign)
+Le schéma à un seul pli (A4 -> A5 imbriqué)
 se calcule avec une formule fiable et vérifiable :
 
     Pour un cahier de P pages (P divisible par 4), feuille k (k=1 = la plus
