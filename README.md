@@ -25,8 +25,9 @@ Ce qu'il reste à faire
    n'a qu'une seule option pour l'instant (`fold_1`). On les ajoute un
    par un, chacun vérifié par pliage papier réel avant d'être codé
    (voir `schemes.py` pour le détail).
-2. **Marges/fond perdu/traits de coupe** — pas encore gérés.
-3. **Repères de cahier** (numérotation dans le dos, utile à la couture)
+   
+3. **Marges/fond perdu/traits de coupe** — pas encore gérés.
+4. **Repères de cahier** (numérotation dans le dos, utile à la couture)
    — pas encore ajoutés.
 
 ## Structure du projet
