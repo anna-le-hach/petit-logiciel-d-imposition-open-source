@@ -29,7 +29,10 @@ Ce qu'il reste à faire
 3. **Marges/fond perdu/traits de coupe** — pas encore gérés.
 4. **Repères de cahier** (numérotation dans le dos, utile à la couture)
    — pas encore ajoutés.
-
+5. **voir les styles d'impositions** qui à besoin d'une rotation de page au verso ?
+   et ceux qui optimise le nombre de livrets par feuilles d'impression ?
+   
+   
 ## Structure du projet
 
 - `schemes.py` — définit les schémas d'imposition (positions + rotations)
