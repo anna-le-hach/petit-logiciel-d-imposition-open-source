@@ -1,40 +1,64 @@
-Imposition PDF pour cahiers coususv0.2 (interface graphique, pli simple)
+# Magouille s'impose (piqûre à cheval, reliure cousue, traits de coupe et repères)
 
-Ce qui marche déjà
+Glisse un PDF, choisis le type de reliure, le format d'impression (et la signature pour la reliure cousue), génère.
 
-- **Interface graphique** (`gui.py`) : glisser-déposer du PDF, choix du format
-  de feuille, choix du nombre de cahiers souhaité (le logiciel calcule la
-  taille de chaque cahier tout seul), bouton "Générer".
-- Découpe un PDF en cahiers, complète avec des pages blanches si besoin
-- Impose en pli simple (A4→A5 imbriqué, plusieurs feuilles nichées par cahier)
-- Sort un PDF prêt à imprimer en recto-verso
-- Testé : rendu de l'UI vérifié par capture d'écran, génération testée sur
-  un PDF de 16 pages (résultat conforme à la formule saddle-stitch classique)
+## Ce que ça fait
 
+- Type de reliure :
+  - Piqûre à cheval : tout le livret en un seul cahier, feuilles imbriquées, pliées une fois
+  - Reliure cousue : le livre est découpé en signatures de 4, 8, 12, 16, 20, 24, 28 ou 32 pages
+- Format d'impression : A4 (pages A5) ou A3 (pages A4), feuille posée en paysage
+- Le format de signature n'est actif que pour la reliure cousue
+- La dernière signature est réduite au strict nécessaire (par exemple 16 + 16 + 8), pas de pages blanches inutiles
+- Pages blanches à la fin seulement pour arriver à un multiple de 4
+- Traits de coupe (un trait à chaque coin des pages + deux traits de pli en haut et en bas) et repères d'impression (quatre cibles au milieu des côtés), en cases à cocher
+- Avec l'une de ces cases, une marge de 12 mm est ajoutée autour des pages, qui sont réduites pour y tenir (environ 89 %). Pour garder la taille réelle, imprime sur une feuille plus grande
+- Espacement entre les pages : case à cocher + valeur en mm de ton choix (0 à 30), un vide au milieu de la feuille entre les deux pages. Les pages sont réduites si besoin pour que tout tienne
+- Sortie : un PDF avec une page par face de feuille (recto, verso, recto, verso...), signature après signature
 
-Usage (dans l'appli)
+L'ordre des pages de chaque signature suit le tableau de référence (vérifié pour 4, 8, 12, 16, 20, 24 et 32 pages).
 
-1. Glisser-déposer le PDF (ou cliquer pour choisir un fichier)
-2. Choisir le format de la feuille d'impression (A4, A3...)
-3. Choisir le nombre de cahiers (signatures) souhaité
-4. Cliquer "Générer le PDF imposé", choisir où l'enregistrer
+## L'interface
 
-Ce qu'il reste à faire
+- Grand panneau blanc : dépose le PDF dessus (ou clique), il affiche le nom, le nombre de pages et le calcul des feuilles
+- L'oiseau est posé sur les boutons roses, sans cadre. Carré du bas à gauche : aperçu de la première page
+- Les quatre boutons roses : le cœur ouvre le dossier du dernier PDF généré, la montagne choisit un PDF, le sourire donne les conseils d'impression, la croix réinitialise
+- La grande barre du bas génère le PDF imposé. Quand tu survoles un petit bouton, elle affiche son nom
 
-1. **Plis multiples (in-4, in-8, in-16, in-32)** — le menu "Type de pli"
-   n'a qu'une seule option pour l'instant (`fold_1`). On les ajoute un
-   par un, chacun vérifié par pliage papier réel avant d'être codé
-   (voir `schemes.py` pour le détail).
-   
-3. **Marges/fond perdu/traits de coupe** — pas encore gérés.
-4. **Repères de cahier** (numérotation dans le dos, utile à la couture)
-   — pas encore ajoutés.
-5. **voir les styles d'impositions** qui à besoin d'une rotation de page au verso ?
-   et ceux qui optimise le nombre de livrets par feuilles d'impression ?
-   
-   
-## Structure du projet
+## Lancer
 
-- `schemes.py` — définit les schémas d'imposition (positions + rotations)
-- `impose.py` — moteur : découpage en cahiers + assemblage du PDF de sortie
-- `gui.py` — interface graphique (glisser-déposer, formulaire, génération)
+    pip install pymupdf tkinterdnd2
+    python gui.py
+
+## Fabriquer l'appli à double-cliquer
+
+À la main, sur ton ordi :
+
+    python -m pip install -r requirements.txt pyinstaller pillow
+    python -m PyInstaller magouille_s_impose.spec --noconfirm
+
+Le résultat est dans `dist/` (`Magouille.exe` sur Windows, `Magouille.app` sur Mac, `Magouille` sur Linux).
+
+Sur GitHub, pour tous les systèmes d'un coup : onglet Actions, « Construire l'appli », Run workflow. Pour publier une version, crée une Release avec un tag `v1.2` (par exemple) : GitHub construit tout et accroche les fichiers à la Release.
+
+## Installer
+
+- Windows : lance le `.exe`. Si « Windows a protégé votre ordinateur » s'affiche, clique sur « Informations complémentaires » puis « Exécuter quand même ».
+- Mac : dézippe, glisse l'appli dans Applications, puis clic droit sur l'appli, Ouvrir, et encore Ouvrir (l'appli n'est pas signée par Apple).
+- Linux : décompresse le `.tar.gz` et lance `Magouille`.
+
+## Imprimer
+
+Recto verso, à 100 %, retournement sur le bord court (la feuille sort en paysage). Si le verso est à l'envers, essaie le bord long.
+En reliure cousue, plie les feuilles d'une signature et glisse-les les unes dans les autres, la première feuille imprimée à l'extérieur.
+
+## Étapes suivantes
+
+Le plan de départ est terminé. Idées : feuille plus grande que le format d'impression pour garder la taille réelle avec les marques, fond perdu, repères de signature pour la couture.
+
+## Fichiers
+
+- `engine.py` : le moteur (signatures, séquence des pages, assemblage du PDF)
+- `gui.py` : l'interface
+- `icone_data.py` : l'oiseau, rangé dans le code
+- `magouille_s_impose.spec` : la recette pour fabriquer l'appli sur chaque système
